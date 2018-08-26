@@ -1,34 +1,75 @@
 import React, { Component, Fragment } from 'react';
-import logo from './logo.svg';
+import { Pagination, Container, Icon, Message } from 'semantic-ui-react';
+
+import { fetchIssues } from './utils';
+import IssueTable from './components/issue-table';
+
 import './App.css';
+import 'semantic-ui-css/semantic.min.css';
 
 class App extends Component {
-  state = { issues: [] };
+  state = { pages: [], loading: false, currentPage: 1, totalPages: 1 };
 
   componentDidMount = () => {
-    const errorMessage = 'Error fetching github data';
-    fetch('https://api.github.com/repos/facebook/react/issues')
-      .then(response => {
-        if (!response || !response.ok) {
-          return window.alert(errorMessage);
-        }
-        return response.json();
-      })
-      .then(issues => {
-        if (!Array.isArray(issues)) return window.alert(errorMessage);
-        console.log(issues);
-        this.setState({ issues });
-      })
-      .catch(function(err) {
-        return window.alert(errorMessage + ': ' + err.message);
-      });
+    this.fetchMoreItens(this.state.currentPage);
+  };
+
+  fetchMoreItens = page => {
+    this.setState({ loading: true });
+    fetchIssues(page, 10).then(issues => {
+      if (!Array.isArray(issues)) {
+        this.setState({
+          loading: false
+        });
+        return window.alert(
+          'Error fetching issues: Unexpected response value.'
+        );
+      }
+      if (issues.length > 0) {
+        this.setState({
+          loading: false,
+          pages: [...this.state.pages, issues],
+          currentPage: page,
+          totalPages:
+            issues.length === 10
+              ? this.state.totalPages + 1
+              : this.state.totalPages
+        });
+      }
+    });
+  };
+
+  handlePaginationChange = (e, { activePage }) => {
+    if (activePage > this.state.pages.length) {
+      return this.fetchMoreItens(activePage);
+    }
+    this.setState({ currentPage: activePage });
   };
 
   render = () => {
+    const issues = Array.isArray(this.state.pages[this.state.currentPage - 1])
+      ? this.state.pages[this.state.currentPage - 1]
+      : [];
     return (
-      <Fragment>
-        <ul>{this.state.issues.map(issue => <li>{issue.number}</li>)}</ul>
-      </Fragment>
+      <Container>
+        <Pagination
+          defaultActivePage={this.state.currentPage}
+          activePage={this.state.currentPage}
+          totalPages={this.state.totalPages}
+          onPageChange={this.handlePaginationChange}
+        />
+        {this.state.loading && <Icon loading name="spinner" size="large" />}
+
+        <IssueTable issues={issues} />
+
+        <Pagination
+          defaultActivePage={this.state.currentPage}
+          activePage={this.state.currentPage}
+          totalPages={this.state.totalPages}
+          onPageChange={this.handlePaginationChange}
+        />
+        {this.state.loading && <Icon loading name="certificate" />}
+      </Container>
     );
   };
 }
