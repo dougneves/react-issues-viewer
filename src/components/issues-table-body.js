@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import IssueBody from './issue-body';
 import IssueRow from './issue-row';
 
+//One line for the table cols and one line for the body text
 const IssueTableBody = ({ issues }) =>
   issues.map((issue, index) => {
     const { body } = issue;

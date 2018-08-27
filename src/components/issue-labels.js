@@ -4,6 +4,7 @@ import { Label } from 'semantic-ui-react';
 
 import { textColorForBackground } from '../utils';
 
+//Render the labels, using the color provided by github api
 const IssueLabels = ({ labels }) =>
   labels.map((label, index) => (
     <Label

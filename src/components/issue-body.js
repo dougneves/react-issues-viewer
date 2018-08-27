@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Table, Message, Button } from 'semantic-ui-react';
 
+//Component to show the body text of an issue
 class IssueBody extends Component {
   state = { opened: false };
 

@@ -7,6 +7,8 @@ import IssueTable from './components/issues-table';
 import './App.css';
 import 'semantic-ui-css/semantic.min.css';
 
+const perPage = 10;
+
 class App extends Component {
   state = { pages: [], loading: false, currentPage: 1, totalPages: 1 };
 
@@ -16,13 +18,13 @@ class App extends Component {
 
   fetchMoreItens = page => {
     this.setState({ loading: true });
-    fetchIssues(page, 10).then(issues => {
+    fetchIssues(page, perPage).then(issues => {
       if (!Array.isArray(issues)) {
         this.setState({
           loading: false
         });
         return window.alert(
-          'Error fetching issues: Unexpected response value.'
+          'Error fetching issues, unexpected response value: ' + issues
         );
       }
       if (issues.length > 0) {
@@ -31,7 +33,7 @@ class App extends Component {
           pages: [...this.state.pages, issues],
           currentPage: page,
           totalPages:
-            issues.length === 10
+            issues.length === perPage
               ? this.state.totalPages + 1
               : this.state.totalPages
         });
@@ -47,6 +49,7 @@ class App extends Component {
   };
 
   render = () => {
+    //currentPage starts on 1, arrays start on 0
     const issues = Array.isArray(this.state.pages[this.state.currentPage - 1])
       ? this.state.pages[this.state.currentPage - 1]
       : [];

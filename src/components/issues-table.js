@@ -4,6 +4,7 @@ import { Table } from 'semantic-ui-react';
 
 import IssuesTableBody from './issues-table-body';
 
+//The table header
 const IssuesTable = ({ issues }) => (
   <Table>
     <Table.Header>

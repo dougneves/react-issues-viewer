@@ -1,6 +1,7 @@
 //fetch the issues for react project from github
 export async function fetchIssues(page, perPage) {
   try {
+    //fetch all issues (state=all)
     const response = await fetch(
       `https://api.github.com/repos/facebook/react/issues?state=all&page=${page}&per_page=${perPage}`
     );
@@ -29,4 +30,5 @@ export const textColorForBackground = backgroundColor => {
   return lume <= 125 ? 'white' : 'black';
 };
 
+//Format Date using pt locale
 export const formatDate = date => new Intl.DateTimeFormat('pt').format(date);

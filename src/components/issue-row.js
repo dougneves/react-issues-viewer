@@ -5,6 +5,7 @@ import { Table, Icon, Label } from 'semantic-ui-react';
 import IssueLabels from './issue-labels';
 import { formatDate } from '../utils.js';
 
+//One line of the table
 const IssueRow = ({ issue, index, backgroundColor }) => {
   const { body, html_url, id, title, labels, state } = issue;
   const created_at = new Date(issue.created_at);
