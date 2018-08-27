@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { Pagination, Container, Icon, Message } from 'semantic-ui-react';
 
 import { fetchIssues } from './utils';
-import IssueTable from './components/issue-table';
+import IssueTable from './components/issues-table';
 
 import './App.css';
 import 'semantic-ui-css/semantic.min.css';
