@@ -1,5 +1,5 @@
-import React, { Component, Fragment } from 'react';
-import { Pagination, Container, Icon, Message } from 'semantic-ui-react';
+import React, { Component } from 'react';
+import { Pagination, Container, Icon } from 'semantic-ui-react';
 
 import { fetchIssues } from './utils';
 import IssueTable from './components/issues-table';
@@ -53,7 +53,6 @@ class App extends Component {
     return (
       <Container>
         <Pagination
-          defaultActivePage={this.state.currentPage}
           activePage={this.state.currentPage}
           totalPages={this.state.totalPages}
           onPageChange={this.handlePaginationChange}
@@ -63,12 +62,11 @@ class App extends Component {
         <IssueTable issues={issues} />
 
         <Pagination
-          defaultActivePage={this.state.currentPage}
           activePage={this.state.currentPage}
           totalPages={this.state.totalPages}
           onPageChange={this.handlePaginationChange}
         />
-        {this.state.loading && <Icon loading name="certificate" />}
+        {this.state.loading && <Icon loading name="spinner" size="large" />}
       </Container>
     );
   };

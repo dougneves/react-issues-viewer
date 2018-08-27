@@ -6,7 +6,7 @@ export async function fetchIssues(page, perPage) {
     );
 
     if (!response || !response.ok) {
-      throw 'Error fetching github data';
+      return 'Error fetching github data';
     }
     const issues = await response.json();
     return issues;
@@ -28,3 +28,5 @@ export const textColorForBackground = backgroundColor => {
   //return the apropriate color for text
   return lume <= 125 ? 'white' : 'black';
 };
+
+export const formatDate = date => new Intl.DateTimeFormat('pt').format(date);

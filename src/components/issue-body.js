@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import PropTypes from 'prop-types';
 import { Table, Message, Button } from 'semantic-ui-react';
 
 class IssueBody extends Component {
@@ -33,5 +33,10 @@ class IssueBody extends Component {
     );
   };
 }
+
+IssueBody.propTypes = {
+  body: PropTypes.string.isRequired,
+  backgroundColor: PropTypes.string.isRequired
+};
 
 export default IssueBody;

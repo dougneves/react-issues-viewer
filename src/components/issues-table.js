@@ -1,9 +1,10 @@
-import React, { Fragment } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Table } from 'semantic-ui-react';
 
 import IssuesTableBody from './issues-table-body';
 
-export default ({ issues }) => (
+const IssuesTable = ({ issues }) => (
   <Table>
     <Table.Header>
       <Table.Row>
@@ -16,8 +17,17 @@ export default ({ issues }) => (
         <Table.HeaderCell>State</Table.HeaderCell>
       </Table.Row>
     </Table.Header>
-    <Table.Body>
-      <IssuesTableBody issues={issues} />
-    </Table.Body>
+
+    {issues.length > 0 && (
+      <Table.Body>
+        <IssuesTableBody issues={issues} />
+      </Table.Body>
+    )}
   </Table>
 );
+
+IssuesTable.propTypes = {
+  issues: PropTypes.array.isRequired
+};
+
+export default IssuesTable;
